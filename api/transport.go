@@ -34,8 +34,50 @@ func MakeHandler(svc adapter.Service, mc manager.ManagerClient) http.Handler {
 
 	r := bone.New()
 
-	r.Post("/channels/:id/messages", kithttp.NewServer(
-		sendMessageEndpoint(svc),
+	r.Get("/users", kithttp.NewServer(
+		getUsersEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Get("/users/:id", kithttp.NewServer(
+		getUserEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Get("/users/:id", kithttp.NewServer(
+		getUserEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Post("/users", kithttp.NewServer(
+		createUserEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Delete("/users/:id", kithttp.NewServer(
+		deletetUserEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Post("/login", kithttp.NewServer(
+		loginEndpoint(svc),
+		decodeRequest,
+		encodeResponse,
+		opts...,
+	))
+
+	r.Post("/auth", kithttp.NewServer(
+		authEndpoint(svc),
 		decodeRequest,
 		encodeResponse,
 		opts...,
